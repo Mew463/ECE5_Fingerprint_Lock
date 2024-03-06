@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+
+  </head>
+  
+  <body>
+    <h1 class="header"> ECE 5 Locker </h1>
+    <div id = "grid-container">
+      <button id="unlock-button">UNLOCK</button>
+      <form action="/generate_204" id = "enroll-form">
+        <input type="text" id = "enroll-text-field" placeholder="New User" required pattern="[A-Za-z0-9 ]{1,20}" title="Name must be 1-20 characters long and contain only letters and numbers">
+        <input type="submit" value="Enroll Fingerprint" id ="enroll-button">
+      </form>
+      <button id="delete-all-button">DELETE ALL</button>
+    </div>
+    
+    
+    
+    
+    <h1> Current Users </h1>
+
+    <div class = "grid-container">
+      <div class = "grid-item-class" id = "grid-item">
+        <p class = "user-name">Name</p>
+        <button class = "delete-button-class">Delete</button>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <th>Header 3</th>
+      </tr>
+      <tr>
+        <td>Row 1, Cell 1</td>
+        <td>Row 1, Cell 2</td>
+        <td>Row 1, Cell 3</td>
+      </tr>
+      <tr>
+        <td>Row 2, Cell 1</td>
+        <td>Row 2, Cell 2</td>
+        <td>Row 2, Cell 3</td>
+      </tr>
+      <!-- Add more rows as needed -->
+    </table>
+
+    <script src="script.js"></script>
+  </body>
+</html>

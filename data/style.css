@@ -1,0 +1,85 @@
+input[type="submit"], button{
+    background-color: #259c29;
+    border: none;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+    transition-duration: 0.4s;
+}
+
+#delete-all-button {
+    background-color: red;
+    padding: 30px;
+}
+
+#enroll-button{
+    padding: 6px 15px;
+}
+
+#unlock-button {
+    padding: 30px 60px;
+    justify-self: start;
+}
+
+.grid-item-class {
+    display: none;
+    align-items: center;
+}
+
+.user-name {
+    display: inline-block;
+    flex-grow: 1;
+    margin-right: auto;
+}
+
+#grid-container {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 50px;
+    justify-content: space-between;
+}
+
+.delete-button-class {
+    margin-right: 100px;
+    background-color: red; /* Set background color to red */
+    color: white; /* Set text color to white */
+    border: none; /* Remove border */
+    padding: 10px 10px; /* Add padding */
+    border-radius: 5px; /* Add border radius for rounded corners */
+}
+
+.header {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    font-size: 50px;
+}
+
+table {
+    width: 80%; /* Adjust based on your needs */
+    margin: 20px auto; /* Center the table and add some margin around it */
+    border-collapse: collapse; /* Collapse borders */
+    text-align: left; /* Align text to the left */
+  }
+
+  th, td {
+    padding: 8px; /* Add some padding for table data */
+    border: 1px solid #ddd; /* Light grey border */
+  }
+
+  th {
+    background-color: #04AA6D; /* Green background for headers */
+    color: white; /* White text color */
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2; /* Zebra striping for rows */
+  }
+
+  tr:hover {
+    background-color: #ddd; /* Hover effect for rows */
+  }
