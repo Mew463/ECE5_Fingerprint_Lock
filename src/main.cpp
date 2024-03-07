@@ -9,19 +9,18 @@
 #include "fingerprint.h"
 #include "Database_Handler.h"
 
-const char *ssid = "RESNET-BROTECTED"; // Name of the WIFI network hosted by the device
-const char *password = "marbry2025";   // Password
+// const char *ssid = "RESNET-BROTECTED"; // Name of the WIFI network hosted by the device
+// const char *password = "marbry2025";   // Password
 
-// const char* ssid = "EnVision-Local"; //Name of the WIFI network hosted by the device
-// const char* password =  "thinkmakebreak";               //Password
+const char* ssid = "EnVision-Local"; //Name of the WIFI network hosted by the device
+const char* password =  "thinkmakebreak";               //Password
 
 #include <FastLED.h>
 CRGB leds[6];
 
 AsyncWebServer server(80);
 
-const int overrideButton = 13; // (SW2 on colin's dev board)
-const int unlockPin = 21;
+const int unlockPin = 4;
 
 enum states
 {
@@ -58,10 +57,10 @@ void webServerSetup()
 {
 
   // This is a super simple page that will be served up any time the root location is requested.  Get here intentionally by typing in the IP address.
-  //  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-  //    request->send(200, "text/html", "<!DOCTYPE html><html><head><title>Success</title></head><body><p>Hooray</p></body>");
-  //    USBSerial.println("requested /");
-  //  });
+   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+     request->send(SPIFFS, "/index.html");
+     USBSerial.println("requested /");
+   });
 
   // Default webpage for android devices
   server.on("/generate_204", HTTP_GET, [](AsyncWebServerRequest *request)
@@ -130,10 +129,10 @@ void webServerSetup()
 
 void setup()
 {
-  USBSerial.begin(115200);
+  USBSerial.begin(115200);  
   SPIFFS.begin(true);
 
-  FastLED.addLeds<WS2812B, 33, GRB>(leds, 6).setCorrection(TypicalLEDStrip);
+  FastLED.addLeds<WS2812B, 3, GRB>(leds, 6).setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(100);
   setLeds(CRGB::Green);
 
@@ -151,11 +150,6 @@ void setup()
 
   pinMode(unlockPin, OUTPUT);
 
-  // File file = SPIFFS.open("/database.txt", "w");
-  // file.println("id 1");
-
-  // file.close();
-
   fpsensor.initialize();
   myDataBase.updateLines();
 }
@@ -166,18 +160,23 @@ void loop()
   {
   case UNLOCK:
     digitalWrite(unlockPin, HIGH);
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 6; i++)
     {
-      leds[i] = CRGB::Green;
-      leds[5 - i] = CRGB::Green;
+      int n = i+3;
+      if (n > 5)
+        n -= 6;
+      leds[n] = CRGB::Green;
       FastLED.show();
       delay(100);
     }
     delay(500);
-    for (int i = 2; i >= 0; i--)
+    digitalWrite(unlockPin, HIGH);
+    for (int i = 5; i >= 0; i--)
     {
-      leds[i] = CRGB::Black;
-      leds[5 - i] = CRGB::Black;
+      int n = i+3;
+      if (n > 5)
+        n -= 6;
+      leds[n] = CRGB::Black;
       FastLED.show();
       delay(100);
     }
@@ -185,7 +184,14 @@ void loop()
     curState = IDLE;
     break;
   case IDLE:
-    setLeds(CRGB::Black);
+    // setLeds(CRGB::Black);
+    static uint8_t starthue = 0;
+    EVERY_N_MILLIS(100) {
+      fill_rainbow( leds, 6, ++starthue, 8);
+      FastLED.show();
+    }
+
+
     switch (fpsensor.verify())
     {
     case SUCCESS:

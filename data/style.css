@@ -1,3 +1,7 @@
+body {
+    background-color:#2b2b2b
+}
+
 input[type="submit"], button{
     background-color: #259c29;
     border: none;
@@ -10,7 +14,7 @@ input[type="submit"], button{
 
 #delete-all-button {
     background-color: red;
-    padding: 30px;
+    padding: 15px;
 }
 
 #enroll-button{
@@ -18,7 +22,7 @@ input[type="submit"], button{
 }
 
 #unlock-button {
-    padding: 30px 60px;
+    padding: 15px;
     justify-self: start;
 }
 
@@ -27,26 +31,22 @@ input[type="submit"], button{
     align-items: center;
 }
 
-.user-name {
-    display: inline-block;
-    flex-grow: 1;
-    margin-right: auto;
-}
-
 #grid-container {
     display: flex;
-    /* justify-content: center; */
     align-items: center;
-    gap: 50px;
+    gap: 15px;
     justify-content: space-between;
 }
 
+.delete-button-row { 
+    text-align: right;
+}
+
 .delete-button-class {
-    margin-right: 100px;
     background-color: red; /* Set background color to red */
     color: white; /* Set text color to white */
     border: none; /* Remove border */
-    padding: 10px 10px; /* Add padding */
+    padding: 8px 10px; /* Add padding */
     border-radius: 5px; /* Add border radius for rounded corners */
 }
 
@@ -57,6 +57,7 @@ input[type="submit"], button{
     letter-spacing: 2px;
     margin-top: 20px;
     font-size: 50px;
+    color: white;
 }
 
 table {
@@ -64,22 +65,30 @@ table {
     margin: 20px auto; /* Center the table and add some margin around it */
     border-collapse: collapse; /* Collapse borders */
     text-align: left; /* Align text to the left */
-  }
+    border-spacing: 0;
+}
 
-  th, td {
+
+th, td {
     padding: 8px; /* Add some padding for table data */
-    border: 1px solid #ddd; /* Light grey border */
-  }
+    color:white;
+    vertical-align: middle;
+}
 
-  th {
-    background-color: #04AA6D; /* Green background for headers */
+
+th {
+    background-color: #004292; /* Green background for headers */
     color: white; /* White text color */
-  }
+}
 
-  tr:nth-child(even) {
-    background-color: #f2f2f2; /* Zebra striping for rows */
-  }
+tr:nth-child(even) {
+    background-color: #626262; /* Zebra striping for rows */
+}
 
-  tr:hover {
-    background-color: #ddd; /* Hover effect for rows */
-  }
+tr:nth-child(odd) {
+    background-color: #7a7a7a; /* Zebra striping for rows */
+}
+
+tr:hover {
+    background-color: #342e2e; /* Hover effect for rows */
+}

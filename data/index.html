@@ -16,36 +16,17 @@
       </form>
       <button id="delete-all-button">DELETE ALL</button>
     </div>
-    
-    
-    
-    
-    <h1> Current Users </h1>
 
-    <div class = "grid-container">
-      <div class = "grid-item-class" id = "grid-item">
-        <p class = "user-name">Name</p>
-        <button class = "delete-button-class">Delete</button>
-      </div>
-    </div>
-
-    <table>
+    <table id = "user-table">
       <tr>
-        <th>Header 1</th>
-        <th>Header 2</th>
-        <th>Header 3</th>
+        <th>Current Users</th>
+        <th></th>
       </tr>
-      <tr>
-        <td>Row 1, Cell 1</td>
-        <td>Row 1, Cell 2</td>
-        <td>Row 1, Cell 3</td>
+      <tr class = "grid-item-class" id = "grid-item" style = "display:none">
+        <td class = "user-name">Name</td>
+        <td class = "delete-button-row"><button class = "delete-button-class">X</button></td>
       </tr>
-      <tr>
-        <td>Row 2, Cell 1</td>
-        <td>Row 2, Cell 2</td>
-        <td>Row 2, Cell 3</td>
-      </tr>
-      <!-- Add more rows as needed -->
+      
     </table>
 
     <script src="script.js"></script>

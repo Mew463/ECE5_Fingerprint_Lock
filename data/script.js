@@ -25,11 +25,9 @@ deleteAllButton.addEventListener("click", () => {
 unlockButton.addEventListener("click", () => {
   fetch("/unlock", {method: 'GET'})
     .then(() => {
-      // Optional: Handle success if needed
       console.log("GET request sent successfully");
     })
     .catch(error => {
-      // Handle errors
       console.error("Error sending GET request:", error);
     });
 });
@@ -43,7 +41,6 @@ enrollForm.addEventListener("submit", function(event) {
           throw new Error('Network response was not ok');
         }
         enrollTextField.value = "";
-        // alert("Finish Enrollment Process on Sensor");
         getData();
       })
       .catch(error => { console.error('There was a problem with the fetch operation:', error); });
@@ -80,14 +77,16 @@ function renderUsers(data) {
   data.forEach(user => {
     var gridItemClone = gridItem.cloneNode(true);
     gridItemClone.classList.add("grid-item-class");
-    gridItemClone.style.display = "flex";
-    const individualUser = gridItemClone.querySelector('p');
+    gridItemClone.style.display = "table-row";
+    const individualUser = gridItemClone.querySelectorAll('td')[0];
     individualUser.classList.add("user-name");
     individualUser.innerHTML = user;
+    gridItemClone.querySelectorAll('td')[1].classList.add("delete-button-row");
     const deleteButton = gridItemClone.querySelector('button');
     deleteButton.classList.add("delete-button-class");
     deleteButton.id = user;
-    document.body.appendChild(gridItemClone);
+    document.getElementById('user-table').appendChild(gridItemClone);
+    // document.body.appendChild(gridItemClone);
 
     deleteButton.addEventListener("click", () => deleteUser(deleteButton.id));
   })
@@ -95,7 +94,7 @@ function renderUsers(data) {
 
 function deleteUser(nameToDelete) {
   console.log(`Button to delete ${nameToDelete} pressed!`);
-  if (confirm(`Are you sure you want to delete ${nameToDelete}?`)) {
+  if (confirm(`Are you sure you want to delete ${nameToDelete}`)) {
     fetch(`/delete/users/?param1=${nameToDelete}`, {
       method: 'DELETE',
     })
