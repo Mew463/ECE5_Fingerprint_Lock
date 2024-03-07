@@ -21,6 +21,12 @@ input[type="submit"], button{
     padding: 6px 15px;
 }
 
+#enroll-text-field {
+    text-align: center;
+    width: 150px;
+}
+
+
 #unlock-button {
     padding: 15px;
     justify-self: start;
@@ -91,4 +97,12 @@ tr:nth-child(odd) {
 
 tr:hover {
     background-color: #342e2e; /* Hover effect for rows */
+}
+
+#enroll-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0px;
 }

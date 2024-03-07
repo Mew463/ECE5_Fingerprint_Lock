@@ -19,6 +19,7 @@ const char* password =  "thinkmakebreak";               //Password
 CRGB leds[6];
 
 AsyncWebServer server(80);
+DNSServer dnsServer;  
 
 const int unlockPin = 4;
 
@@ -63,10 +64,14 @@ void webServerSetup()
    });
 
   // Default webpage for android devices
-  server.on("/generate_204", HTTP_GET, [](AsyncWebServerRequest *request)
-            {
+  server.on("/generate_204", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.html");
     USBSerial.println("requested /generate_204"); });
+
+  // Default webpage for apple devices ???
+  server.on("/hotspot-detect.html", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/index.html");
+    USBSerial.println("requested /hotspot-detect"); });
 
   // Route to load style.css file SUPER IMPORTANT!!
   server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request)
@@ -136,15 +141,13 @@ void setup()
   FastLED.setBrightness(100);
   setLeds(CRGB::Green);
 
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    USBSerial.print(".");
-  }
-  USBSerial.println("IP address: ");
-  USBSerial.println(WiFi.localIP());
-  server.begin();
+  WiFi.mode(WIFI_MODE_AP);
+  const IPAddress localIP(4, 3, 2, 1);		   // the IP address the web server, Samsung requires the IP to be in public space
+  const IPAddress gatewayIP(4, 3, 2, 1);		   // IP address of the network should be the same as the local IP for captive portals
+  const IPAddress subnetMask(255, 255, 255, 0);  // no need to change: https://avinetworks.com/glossary/subnet-mask/
+  // WiFi.softAPConfig(localIP, gatewayIP, subnetMask);
+  WiFi.softAP("ECE5 Cabinet Lock", "karcherispog");            //This starts the WIFI radio in access point mode
+  dnsServer.start(53, "*", WiFi.softAPIP());  //This starts the DNS server.  The "*" sends any request for port 53 straight to the IP address of the device
 
   webServerSetup(); // Configures the behavior of the web server
 
@@ -156,6 +159,9 @@ void setup()
 
 void loop()
 {
+  dnsServer.processNextRequest();         //Without this, the connected device will simply timeout trying to reach the internet
+ 
+
   switch (curState)
   {
   case UNLOCK:
@@ -270,5 +276,4 @@ void loop()
     break;
   }
 
-  // delay(250); // so I can actually read the terminal holy crap
 }
